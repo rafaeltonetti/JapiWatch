@@ -1,0 +1,83 @@
+.bloco {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 30px;
+    width: 40%;
+    padding: 40px;
+    /* From https://css.glass */
+    background: rgba(65, 65, 65, 0.31);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10.1px);
+    -webkit-backdrop-filter: blur(10.1px);
+    color: white;
+}
+
+.teste {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 30px;
+    width: 40%;
+    padding: 40px;
+    background-color: #D9D9D9;
+}
+
+.body {
+    background-image: url("img/fundo-novo-novo.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.body2 {
+    background-color: #EFF2EF;
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.logo {
+    max-width: 60%;
+}
+
+.hero {
+    background-image: url("img/serra-redimensionada.jpg");
+    background-size: 100%;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    padding: 5rem 0 5rem 0;
+    color: white;
+}
+
+.hero p {
+    margin-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        background-image: url("img/serra-redimensionada.jpg");
+        background-size: 230%;
+        padding: 5rem 0 5rem 0;
+        color: white;
+    }
+
+    .bloco {
+        width: 100%;
+        color: black;
+        background-color: transparent;
+        border-radius: none;
+        box-shadow: none;
+        backdrop-filter: none;
+    }
+
+    .body {
+        background-image: none;
+        background-color: white;
+    }
+
+    .logo {
+        max-width: 70%;
+    }
+}
