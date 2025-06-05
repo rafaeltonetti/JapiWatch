@@ -39,7 +39,7 @@ foreach($user_agents as $user_agent){
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid gap-3">
             <a class="navbar-brand" style="margin-left: 30px" href="#">
-                <img src="img/logo-nova-nova.png" alt="Logo" width="120" height="55" class="d-inline-block align-text-top">
+                <img src="img/logo.png" alt="Logo" width="120" height="55" class="d-inline-block align-text-top">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

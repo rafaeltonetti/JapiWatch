@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="container">
                 <center>
                     <a class="navbar-brand" href="index.php">
-                        <img src="img/logo-login.png" alt="Logo" class="d-inline-block align-text-top logo">
+                        <img src="img/logo.png" alt="Logo" class="d-inline-block align-text-top logo">
                     </a>
                     <h5>Cadastro</h5>
                 </center>
