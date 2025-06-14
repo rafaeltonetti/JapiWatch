@@ -1,21 +1,18 @@
  <?php
-// Conectar ao banco de dados
-$conn = new mysqli('localhost', 'root', '', 'sistema_login');
+session_start();
 
-// Verificar conexão
+$conn = new mysqli('localhost', 'root', '', 'japiwatch');
+
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Diretório onde as imagens serão salvas
 $diretorioUpload = "uploads/";
 
-// Verificar se o diretório existe, se não, criar
 if (!file_exists($diretorioUpload)) {
     mkdir($diretorioUpload, 0777, true);
 }
 
-// Processar o upload
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $descricao = $_POST['descricao'];
     $especie = $_POST['especie'];
@@ -23,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $caminhoCompleto = $diretorioUpload . $nomeArquivo;
     $extensao = strtolower(pathinfo($caminhoCompleto, PATHINFO_EXTENSION));
     
-    // Verificar se é realmente uma imagem
     $check = getimagesize($_FILES['imagem']['tmp_name']);
     if ($check === false) {
         $msg = "O arquivo não é uma imagem.";
@@ -31,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $text_botao = "Tentar novamente";
     }
     
-    // Verificar extensões permitidas
     $extensoesPermitidas = ['jpg', 'jpeg', 'png'];
     if (!in_array($extensao, $extensoesPermitidas)) {
         $msg = "Apenas arquivos JPG, JPEG e PNG são permitidos.";
@@ -39,11 +34,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $text_botao = "Tentar novamente";
     }
     
-    // Mover o arquivo para o diretório de uploads
     if (move_uploaded_file($_FILES['imagem']['tmp_name'], $caminhoCompleto)) {
-        // Inserir no banco de dados
-        $stmt = $conn->prepare("INSERT INTO imagens (descricao, especie, caminho_imagem) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $descricao, $especie, $caminhoCompleto);
+    // Verifica se o usuário está logado
+        if (!isset($_SESSION['ID_Usuario'])) {
+            die("Erro: Usuário não autenticado");
+        }
+
+        $stmt = $conn->prepare("INSERT INTO postagem 
+                            (Foto, Descricao_Postagem, Titulo_Postagem, Localizacao_Postagem, ID_Categoria, Categoria) 
+                            VALUES (?, ?, ?, ?, ?, '1')");
+        $stmt->bind_param("ssssi", 
+            $caminhoCompleto,
+            $_POST['descricao'],
+            $_POST['especie'],
+            $_POST['localizacao'],
+            $_SESSION['ID_Usuario'] // Garanta que está pegando o ID do usuário logado
+        );
         
         if ($stmt->execute()) {
             $msg = "Imagem enviada com sucesso!";

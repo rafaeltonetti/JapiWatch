@@ -7,16 +7,16 @@ $mobile = FALSE;
 $user_agents = array("iPhone","iPad","Android","webOS","BlackBerry","iPod","Symbian","IsGeneric");
 foreach($user_agents as $user_agent){
     if (strpos($_SERVER['HTTP_USER_AGENT'], $user_agent) !== FALSE) {
-        if (isset($_SESSION["usuario_nome"])) {
-            $text_lado = $_SESSION["usuario_nome"];
+        if (isset($_SESSION["Nome_Completo"])) {
+            $text_lado = $_SESSION["Nome_Completo"];
             $botao = "<a class='nav-link' href='logout.php'>Sair</a>";
         } else {
             $text_lado = "";
             $botao = "<a class='nav-link' href='login.php'>Login</a>";
         }
     } else {
-        if (isset($_SESSION["usuario_nome"])) {
-            $text_lado = $_SESSION["usuario_nome"];
+        if (isset($_SESSION["Nome_Completo"])) {
+            $text_lado = $_SESSION["Nome_Completo"];
             $botao = "<a class='btn btn-outline-danger' href='logout.php'>Sair</a>";
         } else {
             $text_lado = "";
@@ -79,18 +79,20 @@ foreach($user_agents as $user_agent){
     <h2 class="mb-4 mt-4">Últimos registros:</h2>
     <div class="row justify-content-center g-3 mb-4">
         <?php
-            $sql = "SELECT descricao, caminho_imagem, especie FROM imagens ORDER BY data_upload DESC LIMIT 4";
+            $sql = "SELECT p.Titulo_Postagem AS especie, p.Descricao_Postagem AS descricao, 
+               p.Foto AS caminho_imagem, p.Localizacao_Postagem AS localizacao FROM postagem p ORDER BY p.Data_Postagem DESC LIMIT 4";
             $result = $conn->query($sql);
             while ($row = $result->fetch_assoc()) {
                 echo '<div class="col-lg-3 col-md-6 col-sm-6">';
-                echo '  <div class="card h-100">';
-                echo '    <img src="' . $row["caminho_imagem"] . '" class="card-img-top img-card" style="object-fit: cover; height: 200px;">';
-                echo '    <div class="card-body d-flex flex-column">';
-                echo '      <h5 class="card-title">' . $row["especie"] . '</h5>';
-                echo '      <p class="card-text">' . $row["descricao"] . '</p>';
-                echo '      <a href="#" class="btn btn-success mt-auto">Ver</a>';
+                echo '    <div class="card h-100">';
+                echo '        <img src="' . $row['caminho_imagem'] . '" class="card-img-top img-card" style="object-fit: cover; height: 200px;">';
+                echo '        <div class="card-body d-flex flex-column">';
+                echo '            <h5 class="card-title">' . $row['especie'] . '</h5>';
+                echo '            <p class="card-text">' . $row['descricao'] . '</p>';
+                echo '            <small class="text-muted mb-2">' . $row['localizacao'] . '</small>';
+                echo '            <a href="#" class="btn btn-success mt-auto">Ver</a>';
+                echo '        </div>';
                 echo '    </div>';
-                echo '  </div>';
                 echo '</div>';
             }
         ?>

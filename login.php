@@ -4,34 +4,40 @@ include 'conexao.php';
 
 $mensagem = "";
 
-// Verifica se há um parâmetro 'redirect' na URL
-$redirect = isset($_GET['redirect']) ? $_GET['redirect'] : 'index.php';
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
-
-    $stmt = $conn->prepare("SELECT id, nome, senha FROM usuarios WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $resultado = $stmt->get_result();
-
-    if ($resultado->num_rows > 0) {
-        $usuario = $resultado->fetch_assoc();
-
-        if (password_verify($senha, $usuario['senha'])) {
-            $_SESSION['usuario_id'] = $usuario['id'];
-            $_SESSION['usuario_nome'] = $usuario['nome'];
-            header("Location: " . $redirect); // Redireciona para a página especificada
-            exit();
-        } else {
-            $mensagem = '<div class="alert alert-danger">Email ou senha incorretos!</div>';
-        }
+    // Verifica se os campos existem antes de acessá-los
+    if (!isset($_POST['email']) || !isset($_POST['senha'])) {
+        $mensagem = '<div class="alert alert-danger">Preencha todos os campos!</div>';
     } else {
-        $mensagem = '<div class="alert alert-danger">Email ou senha incorretos!</div>';
-    }
+        $email = trim($_POST['email']);
+        $senha = trim($_POST['senha']);
 
-    $stmt->close();
+        // Validação básica
+        if (empty($email) || empty($senha)) {
+            $mensagem = '<div class="alert alert-danger">Preencha todos os campos!</div>';
+        } else {
+            $stmt = $conn->prepare("SELECT ID_Usuario, Nome_Completo, Senha FROM usuario WHERE Email = ?");
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+
+            if ($resultado->num_rows > 0) {
+                $usuario = $resultado->fetch_assoc();
+                
+                if (password_verify($senha, $usuario['Senha'])) {
+                    $_SESSION['ID_Usuario'] = $usuario['ID_Usuario'];
+                    $_SESSION['Nome_Completo'] = $usuario['Nome_Completo'];
+                    header("Location: index.php");
+                    exit();
+                } else {
+                    $mensagem = '<div class="alert alert-danger">Email ou senha incorretos!</div>';
+                }
+            } else {
+                $mensagem = '<div class="alert alert-danger">Email ou senha incorretos!</div>';
+            }
+            $stmt->close();
+        }
+    }
 }
 ?>
 

@@ -6,36 +6,36 @@ $mensagem = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nome = $_POST['nome'];
     $email = $_POST['email'];
+    $username = $_POST['username']; // Novo campo
     $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
 
     try {
-        // Verifica se o e-mail já existe ANTES de tentar inserir
-        $stmt_verifica = $conn->prepare("SELECT email FROM usuarios WHERE email = ?");
-        $stmt_verifica->bind_param("s", $email);
+        // Verifica se email OU username já existem
+        $stmt_verifica = $conn->prepare("SELECT Email, Username FROM usuario WHERE Email = ? OR Username = ?");
+        $stmt_verifica->bind_param("ss", $email, $username);
         $stmt_verifica->execute();
         $resultado = $stmt_verifica->get_result();
 
         if ($resultado->num_rows > 0) {
-            $mensagem = '<div class="alert alert-danger">Este e-mail já está cadastrado!</div>';
+            $usuario_existente = $resultado->fetch_assoc();
+            if ($usuario_existente['Email'] === $email) {
+                $mensagem = '<div class="alert alert-danger">Este e-mail já está cadastrado!</div>';
+            } else {
+                $mensagem = '<div class="alert alert-danger">Este nome de usuário já está em uso!</div>';
+            }
         } else {
-            // Se não existir, procede com o cadastro
-            $stmt = $conn->prepare("INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)");
-            $stmt->bind_param("sss", $nome, $email, $senha);
+            // Se não existir, cadastra
+            $stmt = $conn->prepare("INSERT INTO usuario (Nome_Completo, Email, Senha, Username) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("ssss", $nome, $email, $senha, $username);
 
             if ($stmt->execute()) {
-                $mensagem = '<div class="alert alert-success">Cadastro realizado com sucesso!</div>';
+                $_SESSION['mensagem'] = '<div class="alert alert-success">Cadastro realizado com sucesso!</div>';
                 header("Location: login.php");
+                exit();
             }
-            $stmt->close();
         }
-        $stmt_verifica->close();
     } catch (mysqli_sql_exception $e) {
-        // Fallback para capturar erros inesperados
-        if ($e->getCode() == 1062) { // Código do erro "Duplicate entry"
-            $mensagem = '<div class="alert alert-danger">Este e-mail já está em uso.</div>';
-        } else {
-            $mensagem = '<div class="alert alert-warning">Erro no cadastro: ' . htmlspecialchars($e->getMessage()) . '</div>';
-        }
+        $mensagem = '<div class="alert alert-danger">Erro: ' . htmlspecialchars($e->getMessage()) . '</div>';
     }
 }
 ?>
@@ -63,8 +63,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 <form method="post">
                     <div class="mb-3">
-                        <label for="nome" class="form-label">Nome</label>
+                        <label for="nome" class="form-label">Nome completo</label>
                         <input type="text" class="form-control" name="nome" required placeholder="Digite seu nome">
+                    </div>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Nome de Usuário</label>
+                        <input type="text" class="form-control" name="username" required 
+                            placeholder="Ex: japiExplorer23"
+                            pattern="[a-zA-Z0-9_]{4,20}" 
+                            title="4-20 caracteres (letras, números ou _)">
+                        <small class="text-muted-dark">Será seu identificador público</small>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Endereço de email</label>

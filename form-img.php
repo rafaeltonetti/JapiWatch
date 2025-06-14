@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["usuario_nome"])) {
+if (!isset($_SESSION["Nome_Completo"])) {
     header("location: login.php?redirect=form-img.php"); // Adiciona o parâmetro redirect
     exit();
 }
@@ -31,6 +31,10 @@ if (!isset($_SESSION["usuario_nome"])) {
                     <div class="mb-3">
                         <label for="descricao" class="form-label">Descrição da Imagem:</label>
                         <textarea class="form-control" aria-label="With textarea" name="descricao" id="descricao" maxlength="255" rows=5></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="localizacao" class="form-label">Localização:</label>
+                        <input type="text" name="localizacao" id="localizacao" class="form-control" required>
                     </div>
                     <div class="mb-3">
                         <label for="imagem" class="form-label">Selecione a imagem:</label>
