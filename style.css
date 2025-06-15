@@ -53,12 +53,23 @@
     margin-bottom: 30px;
 }
 
+
+footer a:hover {
+    color: #0d6efd !important;
+    transition: color 0.3s;
+}
+
+footer .form-control {
+    background-color: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.3);
+    color: white;
+}
+
 @media (max-width: 768px) {
     .hero {
-        background-image: url("img/serra-redimensionada.jpg");
-        background-size: 230%;
+        background-image: url("img/hero.jpg");
+        background-size: 200%;
         padding: 5rem 0 5rem 0;
-        color: white;
     }
 
     .bloco {
@@ -72,6 +83,18 @@
 
     .body {
         background-image: none;
+        background-color: white;
+    }
+
+    .body2 {
+        background-color: white;
+    }
+
+    .teste {
+        transform: translate(-50%, -50%);
+        border-radius: 30px;
+        width: 100%;
+        padding: 40px;
         background-color: white;
     }
 

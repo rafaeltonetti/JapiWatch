@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             placeholder="Ex: japiExplorer23"
                             pattern="[a-zA-Z0-9_]{4,20}" 
                             title="4-20 caracteres (letras, números ou _)">
-                        <small class="text-muted-dark">Será seu identificador público</small>
+                        <small class="text-muted-darkf">Será seu identificador público</small>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Endereço de email</label>

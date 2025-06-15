@@ -34,6 +34,8 @@ foreach($user_agents as $user_agent){
     <title>JapiWatch</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -99,6 +101,70 @@ foreach($user_agents as $user_agent){
     </div>
 </div>
 
+
+
+
+<!-- Footer -->
+<footer class="bg-dark text-white pt-5 pb-4">
+    <div class="container">
+        <div class="row">
+            <!-- Coluna Sobre -->
+            <div class="col-md-4 mb-4">
+                <h5 class="text-uppercase mb-4">Sobre o JapiWatch</h5>
+                <p>
+                    Plataforma colaborativa para monitoramento da biodiversidade na Serra do Japi. 
+                    Junte-se a nós nessa missão de preservação!
+                </p>
+                <div class="mt-3">
+                    <a href="#" class="text-white me-2"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-white me-2"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-white me-2"><i class="bi bi-twitter-x"></i></a>
+                </div>
+            </div>
+
+            <!-- Coluna Links Rápidos -->
+            <div class="col-md-2 mb-4">
+                <h5 class="text-uppercase mb-4">Links Rápidos</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="#" class="text-white text-decoration-none">Galeria</a></li>
+                    <li class="mb-2"><a href="form-img.php" class="text-white text-decoration-none">Registrar Espécie</a></li>
+                    <li class="mb-2"><a href="#" class="text-white text-decoration-none">Sobre o Projeto</a></li>
+                    <li class="mb-2"><a href="#" class="text-white text-decoration-none">Termos de Uso</a></li>
+                </ul>
+            </div>
+
+            <!-- Coluna Contato -->
+            <div class="col-md-4 mb-4">
+                <h5 class="text-uppercase mb-4">Contato</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="bi bi-envelope me-2"></i> contato@japiwatch.com.br</li>
+                    <li class="mb-2"><i class="bi bi-telephone me-2"></i> (11) 1234-5678</li>
+                    <li><i class="bi bi-geo-alt me-2"></i> Jundiaí - SP, Brasil</li>
+                </ul>
+            </div>
+
+            <!-- Coluna Newsletter -->
+            <div class="col-md-2 mb-4">
+                <h5 class="text-uppercase mb-4">Newsletter</h5>
+                <form>
+                    <div class="mb-3">
+                        <input type="email" class="form-control form-control-sm" placeholder="Seu email">
+                    </div>
+                    <button type="submit" class="btn btn-outline-light btn-sm">Assinar</button>
+                </form>
+            </div>
+        </div>
+
+        <hr class="my-4 bg-light">
+
+        <!-- Copyright -->
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p class="mb-0">&copy; <?= date('Y') ?> JapiWatch. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </div>
+</footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
 </body>
