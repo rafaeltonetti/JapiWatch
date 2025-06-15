@@ -54,6 +54,9 @@ foreach($user_agents as $user_agent){
                     <li class="nav-item">
                     <a class="nav-link" href="#">Sobre</a>
                     </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="user.php">Meu Perfil</a>
+                    </li>
                 </ul>
                 <div class="d-flex align-items-center">
                     <span class="navbar-text me-3"><?= $text_lado ?></span>
