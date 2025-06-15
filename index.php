@@ -38,7 +38,7 @@ foreach($user_agents as $user_agent){
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-dark navbar-expand-lg bg-dark">
         <div class="container-fluid gap-3">
             <a class="navbar-brand" style="margin-left: 30px" href="#">
                 <img src="img/logo.png" alt="Logo" width="120" height="55" class="d-inline-block align-text-top">
@@ -49,7 +49,7 @@ foreach($user_agents as $user_agent){
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item active">
-                    <a class="nav-link" href="#">Galeria</a>
+                    <a class="nav-link" href="feed.php">Galeria</a>
                     </li>
                     <li class="nav-item">
                     <a class="nav-link" href="#">Sobre</a>
@@ -69,7 +69,7 @@ foreach($user_agents as $user_agent){
                 <h1>Bem vindo ao JapiWatch!</h1>
                 <p>Explore e proteja a biodiversidade da Serra do Japi com o JapiWatch! Nosso projeto de ciência cidadã convida você a registrar espécies da fauna e flora, contribuindo para pesquisas científicas enquanto descobre a riqueza natural dessa reserva.</p>
                 <div class="d-flex gap-2 justify-content-center">
-                    <a class="btn btn-success" href="login.php">Explorar Galeria</a>
+                    <a class="btn btn-success" href="feed.php">Explorar Galeria</a>
                     <a class="btn btn-success" href="form-img.php">Registrar Espécie</a>
                 </div>
             </div>
@@ -78,38 +78,33 @@ foreach($user_agents as $user_agent){
 
     
     <div class="container">
-    <h2 class="mb-4 mt-4">Últimos registros:</h2>
-    <div class="row justify-content-center g-3 mb-4">
-        <?php
-            $sql = "SELECT p.Titulo_Postagem AS especie, p.Descricao_Postagem AS descricao, 
-               p.Foto AS caminho_imagem, p.Localizacao_Postagem AS localizacao FROM postagem p ORDER BY p.Data_Postagem DESC LIMIT 4";
-            $result = $conn->query($sql);
-            while ($row = $result->fetch_assoc()) {
-                echo '<div class="col-lg-3 col-md-6 col-sm-6">';
-                echo '    <div class="card h-100">';
-                echo '        <img src="' . $row['caminho_imagem'] . '" class="card-img-top img-card" style="object-fit: cover; height: 200px;">';
-                echo '        <div class="card-body d-flex flex-column">';
-                echo '            <h5 class="card-title">' . $row['especie'] . '</h5>';
-                echo '            <p class="card-text">' . $row['descricao'] . '</p>';
-                echo '            <small class="text-muted mb-2">' . $row['localizacao'] . '</small>';
-                echo '            <a href="#" class="btn btn-success mt-auto">Ver</a>';
-                echo '        </div>';
-                echo '    </div>';
-                echo '</div>';
-            }
-        ?>
+        <h2 class="mb-4 mt-4">Últimos registros:</h2>
+        <div class="row justify-content-center g-3 mb-4">
+            <?php
+                $sql = "SELECT p.Titulo_Postagem AS especie, p.Descricao_Postagem AS descricao, 
+                p.Foto AS caminho_imagem, p.Localizacao_Postagem AS localizacao FROM postagem p ORDER BY p.Data_Postagem DESC LIMIT 4";
+                $result = $conn->query($sql);
+                while ($row = $result->fetch_assoc()) {
+                    echo '<div class="col-lg-3 col-md-6 col-sm-6">';
+                    echo '    <div class="card h-100">';
+                    echo '        <img src="' . $row['caminho_imagem'] . '" class="card-img-top img-card" style="object-fit: cover; height: 200px;">';
+                    echo '        <div class="card-body d-flex flex-column">';
+                    echo '            <h5 class="card-title">' . $row['especie'] . '</h5>';
+                    echo '            <p class="card-text">' . $row['descricao'] . '</p>';
+                    echo '            <small class="text-muted mb-2">' . $row['localizacao'] . '</small>';
+                    echo '            <a href="#" class="btn btn-success mt-auto">Ver</a>';
+                    echo '        </div>';
+                    echo '    </div>';
+                    echo '</div>';
+                }
+            ?>
+        </div>
     </div>
-</div>
 
-
-
-
-<!-- Footer -->
 <footer class="bg-dark text-white pt-5 pb-4">
     <div class="container">
         <div class="row">
-            <!-- Coluna Sobre -->
-            <div class="col-md-4 mb-4">
+            <div class="col-md-5 mb-4">
                 <h5 class="text-uppercase mb-4">Sobre o JapiWatch</h5>
                 <p>
                     Plataforma colaborativa para monitoramento da biodiversidade na Serra do Japi. 
@@ -122,8 +117,7 @@ foreach($user_agents as $user_agent){
                 </div>
             </div>
 
-            <!-- Coluna Links Rápidos -->
-            <div class="col-md-2 mb-4">
+            <div class="col-md-3 mb-4">
                 <h5 class="text-uppercase mb-4">Links Rápidos</h5>
                 <ul class="list-unstyled">
                     <li class="mb-2"><a href="#" class="text-white text-decoration-none">Galeria</a></li>
@@ -132,9 +126,7 @@ foreach($user_agents as $user_agent){
                     <li class="mb-2"><a href="#" class="text-white text-decoration-none">Termos de Uso</a></li>
                 </ul>
             </div>
-
-            <!-- Coluna Contato -->
-            <div class="col-md-4 mb-4">
+            <div class="col-md-3 mb-4">
                 <h5 class="text-uppercase mb-4">Contato</h5>
                 <ul class="list-unstyled">
                     <li class="mb-2"><i class="bi bi-envelope me-2"></i> contato@japiwatch.com.br</li>
@@ -142,22 +134,10 @@ foreach($user_agents as $user_agent){
                     <li><i class="bi bi-geo-alt me-2"></i> Jundiaí - SP, Brasil</li>
                 </ul>
             </div>
-
-            <!-- Coluna Newsletter -->
-            <div class="col-md-2 mb-4">
-                <h5 class="text-uppercase mb-4">Newsletter</h5>
-                <form>
-                    <div class="mb-3">
-                        <input type="email" class="form-control form-control-sm" placeholder="Seu email">
-                    </div>
-                    <button type="submit" class="btn btn-outline-light btn-sm">Assinar</button>
-                </form>
-            </div>
         </div>
 
         <hr class="my-4 bg-light">
 
-        <!-- Copyright -->
         <div class="row">
             <div class="col-md-12 text-center">
                 <p class="mb-0">&copy; <?= date('Y') ?> JapiWatch. Todos os direitos reservados.</p>
