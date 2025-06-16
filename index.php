@@ -122,9 +122,9 @@ foreach($user_agents as $user_agent){
             <div class="col-md-3 mb-4">
                 <h5 class="text-uppercase mb-4">Links Rápidos</h5>
                 <ul class="list-unstyled">
-                    <li class="mb-2"><a href="#" class="text-white text-decoration-none">Galeria</a></li>
+                    <li class="mb-2"><a href="feed.php" class="text-white text-decoration-none">Galeria</a></li>
                     <li class="mb-2"><a href="form-img.php" class="text-white text-decoration-none">Registrar Espécie</a></li>
-                    <li class="mb-2"><a href="#" class="text-white text-decoration-none">Sobre o Projeto</a></li>
+                    <li class="mb-2"><a href="sobre.php" class="text-white text-decoration-none">Sobre o Projeto</a></li>
                     <li class="mb-2"><a href="#" class="text-white text-decoration-none">Termos de Uso</a></li>
                 </ul>
             </div>
