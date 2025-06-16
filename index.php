@@ -52,7 +52,7 @@ foreach($user_agents as $user_agent){
                     <a class="nav-link" href="feed.php">Galeria</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="#">Sobre</a>
+                    <a class="nav-link" href="sobre.php">Sobre</a>
                     </li>
                     <li class="nav-item">
                     <a class="nav-link" href="user.php">Meu Perfil</a>

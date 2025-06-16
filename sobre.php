@@ -104,7 +104,7 @@ $total_posts = $conn->query("SELECT COUNT(*) as total FROM postagem")->fetch_ass
                     construímos um banco de dados vivo que auxilia em pesquisas e conservação ambiental.
                 </p>
                 
-                <div class="card border-0 mt-5">
+                <div class="card border-0 shadow-lg bg-dark text-white mt-5">
                     <div class="card-body py-5">
                         <h3 class="text-success">
                             <i class="bi bi-database"></i> 
@@ -122,48 +122,40 @@ $total_posts = $conn->query("SELECT COUNT(*) as total FROM postagem")->fetch_ass
 
             <div class="col-md-3 mb-4">
                 <div class="card creator-card h-100 border-0 shadow-sm">
-                    <img src="https://ui-avatars.com/api/?name=Carlos+M&background=0d6efd&color=fff&size=200" 
+                    <img src="https://ui-avatars.com/api/?name=Rafael+C&background=0d6efd&color=fff&size=200" 
                          class="card-img-top rounded-circle mx-auto mt-3" style="width: 150px;" alt="Carlos">
                     <div class="card-body text-center">
-                        <h5 class="card-title">Carlos Mendes</h5>
-                        <p class="text-muted">Biólogo & Fundador</p>
-                        <p class="card-text">Especialista em ecologia de mamíferos</p>
+                        <h5 class="card-title">Rafael Tonetti Cardoso</h5>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-3 mb-4">
                 <div class="card creator-card h-100 border-0 shadow-sm">
-                    <img src="https://ui-avatars.com/api/?name=Ana+S&background=198754&color=fff&size=200" 
+                    <img src="https://ui-avatars.com/api/?name=Caio+L&background=198754&color=fff&size=200" 
                          class="card-img-top rounded-circle mx-auto mt-3" style="width: 150px;" alt="Ana">
                     <div class="card-body text-center">
-                        <h5 class="card-title">Ana Silva</h5>
-                        <p class="text-muted">Desenvolvedora Full-Stack</p>
-                        <p class="card-text">Responsável pela plataforma digital</p>
+                        <h5 class="card-title">Caio Oshima de Lima</h5>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-3 mb-4">
                 <div class="card creator-card h-100 border-0 shadow-sm">
-                    <img src="https://ui-avatars.com/api/?name=Ricardo+L&background=fd7e14&color=fff&size=200" 
+                    <img src="https://ui-avatars.com/api/?name=Mateus+C&background=fd7e14&color=fff&size=200" 
                          class="card-img-top rounded-circle mx-auto mt-3" style="width: 150px;" alt="Ricardo">
                     <div class="card-body text-center">
-                        <h5 class="card-title">Ricardo Lopes</h5>
-                        <p class="text-muted">Fotógrafo de Natureza</p>
-                        <p class="card-text">Documentação visual das espécies</p>
+                        <h5 class="card-title">Mateus Santos Carnaúba</h5>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-3 mb-4">
                 <div class="card creator-card h-100 border-0 shadow-sm">
-                    <img src="https://ui-avatars.com/api/?name=Mariana+C&background=6f42c1&color=fff&size=200" 
+                    <img src="https://ui-avatars.com/api/?name=Pedro+P&background=6f42c1&color=fff&size=200" 
                          class="card-img-top rounded-circle mx-auto mt-3" style="width: 150px;" alt="Mariana">
                     <div class="card-body text-center">
-                        <h5 class="card-title">Mariana Costa</h5>
-                        <p class="text-muted">Educadora Ambiental</p>
-                        <p class="card-text">Engajamento comunitário</p>
+                        <h5 class="card-title">Pedro Henrique de Jesus Pereira</h5>
                     </div>
                 </div>
             </div>
@@ -221,7 +213,7 @@ $total_posts = $conn->query("SELECT COUNT(*) as total FROM postagem")->fetch_ass
         // Animação do contador
         const counter = document.getElementById('counter');
         const target = <?= $total_posts ?>;
-        const duration = 2000;
+        const duration = 0;
         const step = target / (duration / 16);
         
         let current = 0;
