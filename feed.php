@@ -83,7 +83,7 @@ $resultado = $stmt->get_result();
                     <a class="nav-link" href="index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="sobre.html">Sobre</a>
+                    <a class="nav-link" href="sobre.php">Sobre</a>
                     </li>
                     <li class="nav-item">
                     <a class="nav-link" href="user.php">Meu Perfil</a>
