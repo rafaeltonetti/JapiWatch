@@ -149,10 +149,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['comentario'])) {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item active">
-                    <a class="nav-link" href="#">Galeria</a>
+                    <a class="nav-link" href="feed.php">Galeria</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="#">Sobre</a>
+                    <a class="nav-link" href="sobre.php">Sobre</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="user.php">Meu Perfil</a>
                     </li>
                 </ul>
                 <div class="d-flex align-items-center">
@@ -166,14 +169,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['comentario'])) {
     <div class="container py-5">
         <div class="content-box">
             <div class="row">
-                <!-- Imagem - ocupará toda a largura em mobile e metade em desktop -->
                 <div class="col-12 col-lg-6 mb-4 mb-lg-0">
                     <div class="post-image-container">
                         <img src="<?= htmlspecialchars($postagem['Foto']) ?>" class="img-fluid post-image" alt="<?= htmlspecialchars($postagem['Titulo_Postagem']) ?>">
                     </div>
                 </div>
-
-                <!-- Conteúdo do post - ocupará toda a largura em mobile e metade em desktop -->
                 <div class="col-12 col-lg-6">
                     <div class="post-header">
                         <h1 class="display-5 fw-bold mb-3"><?= htmlspecialchars($postagem['Titulo_Postagem']) ?></h1>
