@@ -6,11 +6,10 @@ $mensagem = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nome = $_POST['nome'];
     $email = $_POST['email'];
-    $username = $_POST['username']; // Novo campo
+    $username = $_POST['username'];
     $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
 
     try {
-        // Verifica se email OU username já existem
         $stmt_verifica = $conn->prepare("SELECT Email, Username FROM usuario WHERE Email = ? OR Username = ?");
         $stmt_verifica->bind_param("ss", $email, $username);
         $stmt_verifica->execute();

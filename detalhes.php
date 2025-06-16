@@ -68,11 +68,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['comentario'])) {
     if (!empty($comentario)) {
         $stmt_insert = $conn->prepare("
             INSERT INTO comentarios 
-            (Conteudo_Comentario, ID_Categoria, Categoria, ID_Postagem) 
-            VALUES (?, ?, 'Usuario', ?)
+            (Conteudo_Comentario, ID_Categoria, Categoria, ID_Postagem, ID_Usuario) 
+            VALUES (?, ?, 'Usuario', ?, ?)
         ");
-        $stmt_insert->bind_param("sii", $comentario, $_SESSION['ID_Usuario'], $post_id);
+        $stmt_insert->bind_param("siii", $comentario, $_SESSION['ID_Usuario'], $post_id, $_SESSION['ID_Usuario']);
         $stmt_insert->execute();
+        
+        // Notificar o autor da postagem sobre o novo comentário
+        if ($postagem['ID_Categoria'] != $_SESSION['ID_Usuario']) {
+            include 'funcoes.php';
+            criarNotificacao(
+                $postagem['ID_Categoria'],
+                'novo_comentario',
+                '@'.$_SESSION['Nome_Completo'].' comentou na sua postagem',
+                $post_id
+            );
+        }
+        
         header("Location: detalhes.php?id=".$post_id);
         exit();
     }
@@ -149,7 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['comentario'])) {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item active">
-                    <a class="nav-link" href="feed.php">Galeria</a>
+                    <a class="nav-link" href="index.php">Home</a>
                     </li>
                     <li class="nav-item">
                     <a class="nav-link" href="sobre.php">Sobre</a>
@@ -273,9 +285,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['comentario'])) {
                 <div class="col-md-3 mb-4">
                     <h5 class="text-uppercase mb-4">Links Rápidos</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href="feed.php" class="text-white text-decoration-none">Galeria</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Galeria</a></li>
                         <li class="mb-2"><a href="form-img.php" class="text-white text-decoration-none">Registrar Espécie</a></li>
-                        <li class="mb-2"><a href="sobre.php" class="text-white text-decoration-none">Sobre o Projeto</a></li>
+                        <li class="mb-2"><a href="sobre.html" class="text-white text-decoration-none">Sobre o Projeto</a></li>
                         <li class="mb-2"><a href="#" class="text-white text-decoration-none">Termos de Uso</a></li>
                     </ul>
                 </div>

@@ -14,24 +14,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $post_id = intval($_POST['post_id']);
         
         try {
+            // Primeiro, pegar o autor da postagem para notificação
+            $stmt_autor = $conn->prepare("SELECT ID_Usuario FROM postagem WHERE ID_Postagem = ?");
+            $stmt_autor->bind_param("i", $post_id);
+            $stmt_autor->execute();
+            $result_autor = $stmt_autor->get_result();
+            $autor = $result_autor->fetch_assoc();
+            
             $conn->begin_transaction();
             
-            // Primeiro exclui os relacionamentos
+            // Excluir os relacionamentos
             $stmt1 = $conn->prepare("DELETE FROM postagem_contem_especie WHERE ID_Postagem = ?");
             $stmt1->bind_param("i", $post_id);
             $stmt1->execute();
             
-            // Depois os comentários
+            // Excluir os comentários
             $stmt2 = $conn->prepare("DELETE FROM comentarios WHERE ID_Postagem = ?");
             $stmt2->bind_param("i", $post_id);
             $stmt2->execute();
             
-            // Finalmente a postagem
+            // Excluir a postagem
             $stmt3 = $conn->prepare("DELETE FROM postagem WHERE ID_Postagem = ?");
             $stmt3->bind_param("i", $post_id);
             $stmt3->execute();
             
             $conn->commit();
+            
+            // Criar notificação para o autor
+            if ($autor && isset($autor['ID_Usuario'])) {
+                include 'funcoes.php';
+                criarNotificacao(
+                    $autor['ID_Usuario'],
+                    'exclusao_post',
+                    'Sua postagem "'.htmlspecialchars($autor['Titulo_Postagem']).'" foi removida por um administrador',
+                    $post_id
+                );
+            }
+            
             header("Location: admin.php?success=1");
             exit();
             
@@ -43,9 +62,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     if (isset($_POST['excluir_comentario'])) {
         $comentario_id = intval($_POST['comentario_id']);
+        
+        // Primeiro, pegar o autor do comentário para notificação
+        $stmt_autor = $conn->prepare("SELECT ID_Usuario, SUBSTRING(Conteudo_Comentario, 1, 50) AS preview FROM comentarios WHERE ID_Comentario = ?");
+        $stmt_autor->bind_param("i", $comentario_id);
+        $stmt_autor->execute();
+        $result_autor = $stmt_autor->get_result();
+        $autor = $result_autor->fetch_assoc();
+        
         $stmt = $conn->prepare("DELETE FROM comentarios WHERE ID_Comentario = ?");
         $stmt->bind_param("i", $comentario_id);
         $stmt->execute();
+        
+        // Criar notificação para o autor
+        if ($autor && isset($autor['ID_Usuario'])) {
+            include 'funcoes.php';
+            criarNotificacao(
+                $autor['ID_Usuario'],
+                'exclusao_comentario',
+                'Seu comentário "'.htmlspecialchars($autor['preview']).'..." foi removido por um administrador',
+                $comentario_id
+            );
+        }
     }
 }
 
@@ -64,6 +102,85 @@ if (!$post) {
     header("Location: admin.php");
     exit();
 }
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['excluir_post'])) {
+        $post_id = intval($_POST['post_id']);
+        
+        try {
+            // Primeiro, pegar o autor da postagem para notificação
+            $stmt_autor = $conn->prepare("SELECT ID_Categoria, Categoria FROM postagem WHERE ID_Postagem = ?");
+            $stmt_autor->bind_param("i", $post_id);
+            $stmt_autor->execute();
+            $result_autor = $stmt_autor->get_result();
+            $autor = $result_autor->fetch_assoc();
+            
+            $conn->begin_transaction();
+            
+            // Excluir os relacionamentos
+            $stmt1 = $conn->prepare("DELETE FROM postagem_contem_especie WHERE ID_Postagem = ?");
+            $stmt1->bind_param("i", $post_id);
+            $stmt1->execute();
+            
+            // Excluir os comentários
+            $stmt2 = $conn->prepare("DELETE FROM comentarios WHERE ID_Postagem = ?");
+            $stmt2->bind_param("i", $post_id);
+            $stmt2->execute();
+            
+            // Excluir a postagem
+            $stmt3 = $conn->prepare("DELETE FROM postagem WHERE ID_Postagem = ?");
+            $stmt3->bind_param("i", $post_id);
+            $stmt3->execute();
+            
+            $conn->commit();
+            
+            // Criar notificação para o autor
+            if ($autor && $autor['Categoria'] === 'Usuario') {
+                include 'funcoes.php';
+                criarNotificacao(
+                    $autor['ID_Categoria'],
+                    'exclusao_post',
+                    'Sua postagem foi removida por um administrador',
+                    $post_id
+                );
+            }
+            
+            header("Location: admin.php?success=1");
+            exit();
+            
+        } catch (mysqli_sql_exception $e) {
+            $conn->rollback();
+            $mensagem = '<div class="alert alert-danger">Falha na exclusão: '.$e->getMessage().'</div>';
+        }
+    }
+    
+    if (isset($_POST['excluir_comentario'])) {
+        $comentario_id = intval($_POST['comentario_id']);
+        
+        // Primeiro, pegar o autor do comentário para notificação
+        $stmt_autor = $conn->prepare("SELECT ID_Usuario FROM comentarios WHERE ID_Comentario = ?");
+        $stmt_autor->bind_param("i", $comentario_id);
+        $stmt_autor->execute();
+        $result_autor = $stmt_autor->get_result();
+        $autor = $result_autor->fetch_assoc();
+        
+        $stmt = $conn->prepare("DELETE FROM comentarios WHERE ID_Comentario = ?");
+        $stmt->bind_param("i", $comentario_id);
+        $stmt->execute();
+        
+        // Criar notificação para o autor
+        if ($autor && $autor['Categoria'] === 'Usuario') {
+            include 'funcoes.php';
+            criarNotificacao(
+                $autor['ID_Categoria'],
+                'exclusao_comentario',
+                'Seu comentário foi removido por um administrador',
+                $comentario_id
+            );
+        }
+    }
+}
+
 ?>
 
 <!DOCTYPE html>

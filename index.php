@@ -3,6 +3,15 @@ session_start();
 
 include 'conexao.php';
 
+$novas_notificacoes = 0;
+if (isset($_SESSION['ID_Usuario'])) {
+    $usuario_id = $_SESSION['ID_Usuario'];
+    $novas_notificacoes = $conn->query(
+        "SELECT COUNT(*) as total FROM notificacoes 
+         WHERE ID_Usuario = $usuario_id AND Lida = FALSE"
+    )->fetch_assoc()['total'];
+}
+
 $mobile = FALSE;
 $user_agents = array("iPhone","iPad","Android","webOS","BlackBerry","iPod","Symbian","IsGeneric");
 foreach($user_agents as $user_agent){
@@ -24,7 +33,6 @@ foreach($user_agents as $user_agent){
         }
     }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -56,7 +64,49 @@ foreach($user_agents as $user_agent){
                     </li>
                     <li class="nav-item">
                     <a class="nav-link" href="user.php">Meu Perfil</a>
+                    <?php if (isset($_SESSION['ID_Usuario'])): ?>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link position-relative" href="#" id="notificacoesDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-bell"></i>
+                            <?php 
+                            if ($novas_notificacoes > 0): ?>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                <?= $novas_notificacoes ?>
+                            </span>
+                            <?php endif; ?>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="notificacoesDropdown" style="width: 300px;">
+                            <li><h6 class="dropdown-header">Notificações</h6></li>
+                            <?php 
+                            $ultimas = $conn->query(
+                                "SELECT * FROM notificacoes 
+                                WHERE ID_Usuario = {$_SESSION['ID_Usuario']}
+                                ORDER BY Data_Notificacao DESC LIMIT 3"
+                            );
+                            
+                            if ($ultimas->num_rows > 0): ?>
+                                <?php while($notif = $ultimas->fetch_assoc()): ?>
+                                <li>
+                                    <a class="dropdown-item small <?= $notif['Lida'] ? '' : 'fw-bold' ?>" 
+                                    href="notificacoes.php?ler=<?= $notif['ID_Notificacao'] ?>">
+                                    <div class="d-flex justify-content-between">
+                                        <span><?= substr(htmlspecialchars($notif['Conteudo']), 0, 30) ?>...</span>
+                                        <?php if (!$notif['Lida']): ?>
+                                        <span class="badge bg-primary badge-notificacao">Nova</span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <small class="text-muted"><?= date('H:i', strtotime($notif['Data_Notificacao'])) ?></small>
+                                    </a>
+                                </li>
+                                <?php endwhile; ?>
+                            <?php else: ?>
+                                <li><a class="dropdown-item small text-muted" href="#">Nenhuma notificação recente</a></li>
+                            <?php endif; ?>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-center small" href="notificacoes.php">Ver todas as notificações</a></li>
+                        </ul>
                     </li>
+                    <?php endif; ?>
                 </ul>
                 <div class="d-flex align-items-center">
                     <span class="navbar-text me-3"><?= $text_lado ?></span>
