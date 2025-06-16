@@ -54,9 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="d-flex justify-content-center align-items-center">
             <div class="container">
                 <center>
-                    <a class="navbar-brand" href="index.php">
-                        <img src="img/logo.png" alt="Logo" class="d-inline-block align-text-top logo">
-                    </a>
+                    <h1 class="display-1">JapiWatch</h1>
                     <h5>Cadastro</h5>
                 </center>
                 <?= $mensagem ?>
@@ -84,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                     <div class="d-grid gap-2">
                     <button type="submit" class="btn btn-primary col">Cadastrar</button>
-                    <label class="col text-center">Já tem uma conta? <a href="login.php" class="col"> Login</a></label> 
+                    <label class="col text-center">Já tem uma conta? <a href="login.php" class="link-light link-offset-1 link-underline-opacity-100 link-underline-opacity-100-hover"> Login</a></label> 
                     </div>
                 </form>
             </div>

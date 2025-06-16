@@ -9,7 +9,6 @@ if (!isset($_SESSION['admin_id'])) {
 
 $post_id = intval($_GET['id'] ?? 0);
 
-// Processar ações
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['excluir_post'])) {
         $post_id = intval($_POST['post_id']);
@@ -17,17 +16,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         try {
             $conn->begin_transaction();
             
-            // 1. Remove relações com espécies
             $stmt1 = $conn->prepare("DELETE FROM postagem_contem_especie WHERE ID_Postagem = ?");
             $stmt1->bind_param("i", $post_id);
             $stmt1->execute();
             
-            // 2. Remove comentários
             $stmt2 = $conn->prepare("DELETE FROM comentarios WHERE ID_Postagem = ?");
             $stmt2->bind_param("i", $post_id);
             $stmt2->execute();
             
-            // 3. Remove a postagem
             $stmt3 = $conn->prepare("DELETE FROM postagem WHERE ID_Postagem = ?");
             $stmt3->bind_param("i", $post_id);
             $stmt3->execute();
@@ -48,7 +44,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Buscar dados
 $post = $conn->query("SELECT * FROM postagem WHERE ID_Postagem = $post_id")->fetch_assoc();
 $comentarios = $conn->query("SELECT * FROM comentarios WHERE ID_Postagem = $post_id ORDER BY Data_Comentario DESC");
 
@@ -86,7 +81,6 @@ if (!$post) {
     </nav>
 
     <div class="container py-4">
-        <!-- Publicação -->
         <div class="card mb-5">
             <img src="<?= $post['Foto'] ?>" class="card-img-top post-img" alt="...">
             <div class="card-body">
@@ -108,29 +102,28 @@ if (!$post) {
             </div>
         </div>
 
-        <!-- Comentários -->
         <h3 class="mb-4"><i class="bi bi-chat-left-text"></i> Comentários</h3>
         
         <?php if ($comentarios->num_rows > 0): ?>
             <div class="list-group mb-4">
                 <?php while($comentario = $comentarios->fetch_assoc()): ?>
-                <div class="list-group-item">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <p class="mb-1"><?= htmlspecialchars($comentario['Conteudo_Comentario']) ?></p>
-                            <small class="text-muted">
-                                <?= date('d/m/Y H:i', strtotime($comentario['Data_Comentario'])) ?>
-                            </small>
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <p class="mb-1"><?= htmlspecialchars($comentario['Conteudo_Comentario']) ?></p>
+                                <small class="text-muted">
+                                    <?= date('d/m/Y H:i', strtotime($comentario['Data_Comentario'])) ?>
+                                </small>
+                            </div>
+                            <form method="POST">
+                                <input type="hidden" name="comentario_id" value="<?= $comentario['ID_Comentario'] ?>">
+                                <button type="submit" name="excluir_comentario" class="btn btn-sm btn-outline-danger"
+                                        onclick="return confirm('Excluir este comentário?')">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
                         </div>
-                        <form method="POST">
-                            <input type="hidden" name="comentario_id" value="<?= $comentario['ID_Comentario'] ?>">
-                            <button type="submit" name="excluir_comentario" class="btn btn-sm btn-outline-danger"
-                                    onclick="return confirm('Excluir este comentário?')">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </form>
                     </div>
-                </div>
                 <?php endwhile; ?>
             </div>
         <?php else: ?>

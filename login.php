@@ -5,14 +5,12 @@ include 'conexao.php';
 $mensagem = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Verifica se os campos existem antes de acessá-los
     if (!isset($_POST['email']) || !isset($_POST['senha'])) {
         $mensagem = '<div class="alert alert-danger">Preencha todos os campos!</div>';
     } else {
         $email = trim($_POST['email']);
         $senha = trim($_POST['senha']);
 
-        // Validação básica
         if (empty($email) || empty($senha)) {
             $mensagem = '<div class="alert alert-danger">Preencha todos os campos!</div>';
         } else {
@@ -55,9 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="d-flex justify-content-center align-items-center">
             <div class="container">
                 <center>
-                    <a class="navbar-brand" href="index.php">
-                        <img src="img/logo.png" alt="Logo" class="d-inline-block align-text-top logo">
-                    </a>
+                    <h1 class="display-1">JapiWatch</h1>
                     <h5>Login</h5>
                 </center>
                 <?= $mensagem ?>
@@ -72,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary col-12">Login</button>
-                        <label class="col text-center">Ainda não tem uma conta? <a href="registro.php" class="col"> Cadastre-se</a></label>
+                        <label class="col text-center">Ainda não tem uma conta? <a href="registro.php" class="link-light link-offset-1 link-underline-opacity-100 link-underline-opacity-100-hover"> Cadastre-se</a></label>
                     </div>
                 </form>
             </div>

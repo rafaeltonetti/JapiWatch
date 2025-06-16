@@ -6,11 +6,12 @@
     border-radius: 30px;
     width: 40%;
     padding: 40px;
-    /* From https://css.glass */
-    background: rgba(65, 65, 65, 0.31);
+
+    /* transparencia */
+    background: rgba(30, 30, 30, 0.31);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10.1px);
+    backdrop-filter: blur(15.1px);
     -webkit-backdrop-filter: blur(10.1px);
     color: white;
 }
@@ -27,9 +28,9 @@
 }
 
 .body {
-    background-image: url("img/fundo.png");
+    background-image: url("img/hero.jpg");
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: 110%;
 }
 
 .body2 {

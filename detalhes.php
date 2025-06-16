@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['comentario'])) {
             margin-bottom: 0px;
         }
         .post-image {
-            width: 650px;
+            width: 600px;
             height: 400px;
             border-radius: 8px;
             object-fit: cover;
@@ -165,14 +165,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['comentario'])) {
 
     <div class="container py-5">
         <div class="content-box">
-
-            <div class="d-flex">
-
-                <div class="post-image-container">
-                    <img src="<?= htmlspecialchars($postagem['Foto']) ?>" class="post-image" alt="<?= htmlspecialchars($postagem['Titulo_Postagem']) ?>">
+            <div class="row">
+                <!-- Imagem - ocupará toda a largura em mobile e metade em desktop -->
+                <div class="col-12 col-lg-6 mb-4 mb-lg-0">
+                    <div class="post-image-container">
+                        <img src="<?= htmlspecialchars($postagem['Foto']) ?>" class="img-fluid post-image" alt="<?= htmlspecialchars($postagem['Titulo_Postagem']) ?>">
+                    </div>
                 </div>
 
-                <div>
+                <!-- Conteúdo do post - ocupará toda a largura em mobile e metade em desktop -->
+                <div class="col-12 col-lg-6">
                     <div class="post-header">
                         <h1 class="display-5 fw-bold mb-3"><?= htmlspecialchars($postagem['Titulo_Postagem']) ?></h1>
                         <div class="author-info">
@@ -194,11 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['comentario'])) {
                         </p>
                     </div>
                 </div>
-
             </div>
-            
-            
-            
         </div>
 
         <div class="comment-section">
@@ -257,49 +255,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['comentario'])) {
     </div>
 
     <footer class="bg-dark text-white pt-5 pb-4">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-5 mb-4">
-                <h5 class="text-uppercase mb-4">Sobre o JapiWatch</h5>
-                <p>
-                    Plataforma colaborativa para monitoramento da biodiversidade na Serra do Japi. 
-                    Junte-se a nós nessa missão de preservação!
-                </p>
-                <div class="mt-3">
-                    <a href="#" class="text-white me-2"><i class="bi bi-facebook"></i></a>
-                    <a href="#" class="text-white me-2"><i class="bi bi-instagram"></i></a>
-                    <a href="#" class="text-white me-2"><i class="bi bi-twitter-x"></i></a>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 mb-4">
+                    <h5 class="text-uppercase mb-4">Sobre o JapiWatch</h5>
+                    <p>
+                        Plataforma colaborativa para monitoramento da biodiversidade na Serra do Japi. 
+                        Junte-se a nós nessa missão de preservação!
+                    </p>
+                    <div class="mt-3">
+                        <a href="#" class="text-white me-2"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white me-2"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-white me-2"><i class="bi bi-twitter-x"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-md-3 mb-4">
+                    <h5 class="text-uppercase mb-4">Links Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Galeria</a></li>
+                        <li class="mb-2"><a href="form-img.php" class="text-white text-decoration-none">Registrar Espécie</a></li>
+                        <li class="mb-2"><a href="sobre.html" class="text-white text-decoration-none">Sobre o Projeto</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Termos de Uso</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="text-uppercase mb-4">Contato</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="bi bi-envelope me-2"></i> contato@japiwatch.com.br</li>
+                        <li class="mb-2"><i class="bi bi-telephone me-2"></i> (11) 1234-5678</li>
+                        <li><i class="bi bi-geo-alt me-2"></i> Jundiaí - SP, Brasil</li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="col-md-3 mb-4">
-                <h5 class="text-uppercase mb-4">Links Rápidos</h5>
-                <ul class="list-unstyled">
-                    <li class="mb-2"><a href="#" class="text-white text-decoration-none">Galeria</a></li>
-                    <li class="mb-2"><a href="form-img.php" class="text-white text-decoration-none">Registrar Espécie</a></li>
-                    <li class="mb-2"><a href="#" class="text-white text-decoration-none">Sobre o Projeto</a></li>
-                    <li class="mb-2"><a href="#" class="text-white text-decoration-none">Termos de Uso</a></li>
-                </ul>
-            </div>
-            <div class="col-md-3 mb-4">
-                <h5 class="text-uppercase mb-4">Contato</h5>
-                <ul class="list-unstyled">
-                    <li class="mb-2"><i class="bi bi-envelope me-2"></i> contato@japiwatch.com.br</li>
-                    <li class="mb-2"><i class="bi bi-telephone me-2"></i> (11) 1234-5678</li>
-                    <li><i class="bi bi-geo-alt me-2"></i> Jundiaí - SP, Brasil</li>
-                </ul>
+            <hr class="my-4 bg-light">
+
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="mb-0">&copy; <?= date('Y') ?> JapiWatch. Todos os direitos reservados.</p>
+                </div>
             </div>
         </div>
-
-        <hr class="my-4 bg-light">
-
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <p class="mb-0">&copy; <?= date('Y') ?> JapiWatch. Todos os direitos reservados.</p>
-            </div>
-        </div>
-    </div>
-</footer>
+    </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
