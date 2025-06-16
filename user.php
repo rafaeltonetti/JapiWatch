@@ -129,7 +129,7 @@ $postagens = $conn->query("SELECT * FROM postagem WHERE ID_Categoria = $usuario_
                     <a class="nav-link" href="feed.php">Galeria</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="sobre.html">Sobre</a>
+                    <a class="nav-link" href="sobre.php">Sobre</a>
                     </li>
                 </ul>
                 <div class="d-flex align-items-center">
