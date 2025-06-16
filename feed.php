@@ -24,31 +24,26 @@ foreach($user_agents as $user_agent){
     }
 }
 
-// Parâmetros de filtro
 $ordenacao = isset($_GET['ordenacao']) ? $_GET['ordenacao'] : 'recentes';
 $pesquisa = isset($_GET['pesquisa']) ? trim($_GET['pesquisa']) : '';
 
-// Construção da query SQL
 $sql = "SELECT p.ID_Postagem, p.Titulo_Postagem AS especie, p.Descricao_Postagem AS descricao, 
                p.Foto AS caminho_imagem, p.Data_Postagem, u.Nome_Completo AS autor
         FROM postagem p
         JOIN usuario u ON p.ID_Categoria = u.ID_Usuario
         WHERE 1=1";
 
-// Adiciona pesquisa se existir
 if (!empty($pesquisa)) {
     $sql .= " AND p.Titulo_Postagem LIKE ?";
     $param_pesquisa = "%$pesquisa%";
 }
 
-// Adiciona ordenação
 if ($ordenacao === 'recentes') {
     $sql .= " ORDER BY p.Data_Postagem DESC";
 } else {
     $sql .= " ORDER BY p.Data_Postagem ASC";
 }
 
-// Prepara e executa a query
 $stmt = $conn->prepare($sql);
 
 if (!empty($pesquisa)) {

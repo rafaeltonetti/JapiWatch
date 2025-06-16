@@ -14,7 +14,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $post_id = intval($_POST['post_id']);
         
         try {
-            // Primeiro, pegar o autor da postagem para notificação
             $stmt_autor = $conn->prepare("SELECT ID_Usuario FROM postagem WHERE ID_Postagem = ?");
             $stmt_autor->bind_param("i", $post_id);
             $stmt_autor->execute();
@@ -23,24 +22,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             $conn->begin_transaction();
             
-            // Excluir os relacionamentos
             $stmt1 = $conn->prepare("DELETE FROM postagem_contem_especie WHERE ID_Postagem = ?");
             $stmt1->bind_param("i", $post_id);
             $stmt1->execute();
             
-            // Excluir os comentários
             $stmt2 = $conn->prepare("DELETE FROM comentarios WHERE ID_Postagem = ?");
             $stmt2->bind_param("i", $post_id);
             $stmt2->execute();
             
-            // Excluir a postagem
             $stmt3 = $conn->prepare("DELETE FROM postagem WHERE ID_Postagem = ?");
             $stmt3->bind_param("i", $post_id);
             $stmt3->execute();
             
             $conn->commit();
             
-            // Criar notificação para o autor
             if ($autor && isset($autor['ID_Usuario'])) {
                 include 'funcoes.php';
                 criarNotificacao(
@@ -63,7 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['excluir_comentario'])) {
         $comentario_id = intval($_POST['comentario_id']);
         
-        // Primeiro, pegar o autor do comentário para notificação
         $stmt_autor = $conn->prepare("SELECT ID_Usuario, SUBSTRING(Conteudo_Comentario, 1, 50) AS preview FROM comentarios WHERE ID_Comentario = ?");
         $stmt_autor->bind_param("i", $comentario_id);
         $stmt_autor->execute();
@@ -74,7 +68,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("i", $comentario_id);
         $stmt->execute();
         
-        // Criar notificação para o autor
         if ($autor && isset($autor['ID_Usuario'])) {
             include 'funcoes.php';
             criarNotificacao(
@@ -87,7 +80,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Use prepared statements também para as consultas de seleção
 $stmt_post = $conn->prepare("SELECT * FROM postagem WHERE ID_Postagem = ?");
 $stmt_post->bind_param("i", $post_id);
 $stmt_post->execute();
@@ -108,7 +100,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $post_id = intval($_POST['post_id']);
         
         try {
-            // Primeiro, pegar o autor da postagem para notificação
             $stmt_autor = $conn->prepare("SELECT ID_Categoria, Categoria FROM postagem WHERE ID_Postagem = ?");
             $stmt_autor->bind_param("i", $post_id);
             $stmt_autor->execute();
@@ -117,24 +108,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             $conn->begin_transaction();
             
-            // Excluir os relacionamentos
             $stmt1 = $conn->prepare("DELETE FROM postagem_contem_especie WHERE ID_Postagem = ?");
             $stmt1->bind_param("i", $post_id);
             $stmt1->execute();
             
-            // Excluir os comentários
             $stmt2 = $conn->prepare("DELETE FROM comentarios WHERE ID_Postagem = ?");
             $stmt2->bind_param("i", $post_id);
             $stmt2->execute();
             
-            // Excluir a postagem
             $stmt3 = $conn->prepare("DELETE FROM postagem WHERE ID_Postagem = ?");
             $stmt3->bind_param("i", $post_id);
             $stmt3->execute();
             
             $conn->commit();
             
-            // Criar notificação para o autor
             if ($autor && $autor['Categoria'] === 'Usuario') {
                 include 'funcoes.php';
                 criarNotificacao(
@@ -157,7 +144,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['excluir_comentario'])) {
         $comentario_id = intval($_POST['comentario_id']);
         
-        // Primeiro, pegar o autor do comentário para notificação
         $stmt_autor = $conn->prepare("SELECT ID_Usuario FROM comentarios WHERE ID_Comentario = ?");
         $stmt_autor->bind_param("i", $comentario_id);
         $stmt_autor->execute();
@@ -168,7 +154,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("i", $comentario_id);
         $stmt->execute();
         
-        // Criar notificação para o autor
         if ($autor && $autor['Categoria'] === 'Usuario') {
             include 'funcoes.php';
             criarNotificacao(

@@ -18,7 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($resultado->num_rows === 1) {
                 $admin = $resultado->fetch_assoc();
                 
-                // Verificação simples de senha (sem hash neste exemplo)
                 if ($senha === $admin['Senha']) {
                     $_SESSION['admin_id'] = $admin['ID_Administrador'];
                     $_SESSION['admin_nome'] = $admin['Nome_Completo'];

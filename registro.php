@@ -23,7 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $mensagem = '<div class="alert alert-danger">Este nome de usuário já está em uso!</div>';
             }
         } else {
-            // Se não existir, cadastra
             $stmt = $conn->prepare("INSERT INTO usuario (Nome_Completo, Email, Senha, Username) VALUES (?, ?, ?, ?)");
             $stmt->bind_param("ssss", $nome, $email, $senha, $username);
 

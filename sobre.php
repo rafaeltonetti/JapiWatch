@@ -23,7 +23,6 @@ foreach($user_agents as $user_agent){
     }
 }
 
-// Conta o número total de postagens
 $total_posts = $conn->query("SELECT COUNT(*) as total FROM postagem")->fetch_assoc()['total'];
 ?>
 
@@ -93,7 +92,6 @@ $total_posts = $conn->query("SELECT COUNT(*) as total FROM postagem")->fetch_ass
         </div>
     </section>
 
-    <!-- Conteúdo -->
     <div class="container py-5">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center mb-5">
@@ -208,9 +206,7 @@ $total_posts = $conn->query("SELECT COUNT(*) as total FROM postagem")->fetch_ass
 </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Efeito de contador -->
     <script>
-        // Animação do contador
         const counter = document.getElementById('counter');
         const target = <?= $total_posts ?>;
         const duration = 0;

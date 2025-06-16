@@ -29,14 +29,11 @@ if (!isset($_SESSION['ID_Usuario'])) {
     exit();
 }
 
-// Buscar dados do usuário
 $usuario_id = $_SESSION['ID_Usuario'];
 $usuario = $conn->query("SELECT * FROM usuario WHERE ID_Usuario = $usuario_id")->fetch_assoc();
 
-// Processar atualizações
 $mensagem = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Atualizar perfil
     if (isset($_POST['atualizar_perfil'])) {
         $novo_username = trim($_POST['username']);
         $novo_nome = trim($_POST['nome']);
@@ -49,7 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['Nome_Completo'] = $novo_nome;
     }
     
-    // Atualizar senha
     if (isset($_POST['atualizar_senha'])) {
         $senha_atual = trim($_POST['senha_atual']);
         $nova_senha = trim($_POST['nova_senha']);
@@ -68,7 +64,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
     
-    // Atualizar postagem
     if (isset($_POST['atualizar_post'])) {
         $post_id = intval($_POST['post_id']);
         $nova_descricao = $conn->real_escape_string(trim($_POST['descricao']));
@@ -81,7 +76,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mensagem = '<div class="alert alert-success">Postagem atualizada!</div>';
     }
     
-    // Excluir postagem
     if (isset($_POST['excluir_post'])) {
         $post_id = intval($_POST['post_id']);
         $conn->query("DELETE FROM postagem WHERE ID_Postagem = $post_id AND ID_Categoria = $usuario_id AND Categoria = 'Usuario'");
@@ -89,7 +83,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Buscar postagens do usuário
 $postagens = $conn->query("SELECT * FROM postagem WHERE ID_Categoria = $usuario_id AND Categoria = 'Usuario' ORDER BY Data_Postagem DESC");
 ?>
 
@@ -169,13 +162,12 @@ $postagens = $conn->query("SELECT * FROM postagem WHERE ID_Categoria = $usuario_
                 </div>
             </div>
 
-            <!-- Conteúdo Principal -->
             <div class="col-lg-9">
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <?= $mensagem ?>
                         <div class="tab-content">
-                            <!-- Aba: Perfil -->
+                            <!-- perfil -->
                             <div class="tab-pane fade show active" id="perfil">
                                 <h4 class="mb-4"><i class="bi bi-person-fill me-2"></i>Meu Perfil</h4>
                                 <form method="post">
@@ -202,7 +194,7 @@ $postagens = $conn->query("SELECT * FROM postagem WHERE ID_Categoria = $usuario_
                                 </form>
                             </div>
 
-                            <!-- Aba: Senha -->
+                            <!-- senha -->
                             <div class="tab-pane fade" id="senha">
                                 <h4 class="mb-4"><i class="bi bi-lock-fill me-2"></i>Alterar Senha</h4>
                                 <form method="post">
@@ -224,7 +216,7 @@ $postagens = $conn->query("SELECT * FROM postagem WHERE ID_Categoria = $usuario_
                                 </form>
                             </div>
 
-                            <!-- Aba: Postagens -->
+                            <!-- postagens -->
                             <div class="tab-pane fade" id="postagens">
                                 <h4 class="mb-4"><i class="bi bi-images me-2"></i>Minhas Postagens</h4>
                                 
@@ -285,7 +277,6 @@ $postagens = $conn->query("SELECT * FROM postagem WHERE ID_Categoria = $usuario_
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Ativa a aba correta quando há âncora na URL
         window.addEventListener('DOMContentLoaded', () => {
             if (window.location.hash) {
                 const tabTrigger = new bootstrap.Tab(document.querySelector(`a[href="${window.location.hash}"]`));

@@ -35,7 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     
     if (move_uploaded_file($_FILES['imagem']['tmp_name'], $caminhoCompleto)) {
-    // Verifica se o usuário está logado
         if (!isset($_SESSION['ID_Usuario'])) {
             die("Erro: Usuário não autenticado");
         }
@@ -48,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_POST['descricao'],
             $_POST['especie'],
             $_POST['localizacao'],
-            $_SESSION['ID_Usuario'] // Garanta que está pegando o ID do usuário logado
+            $_SESSION['ID_Usuario']
         );
         
         if ($stmt->execute()) {

@@ -32,7 +32,6 @@ if (!isset($_SESSION['ID_Usuario'])) {
 
 $usuario_id = $_SESSION['ID_Usuario'];
 
-// Processar ações
 if (isset($_GET['ler'])) {
     $id = intval($_GET['ler']);
     marcarNotificacaoComoLida($id, $usuario_id);
@@ -47,7 +46,6 @@ if (isset($_GET['marcar_todas'])) {
     $conn->query("UPDATE notificacoes SET Lida = 1 WHERE ID_Usuario = $usuario_id");
 }
 
-// Buscar notificações
 $notificacoes = $conn->query("SELECT * FROM notificacoes 
                              WHERE ID_Usuario = $usuario_id
                              ORDER BY Data_Notificacao DESC");

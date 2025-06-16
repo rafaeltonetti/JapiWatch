@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION["Nome_Completo"])) {
-    header("location: login.php?redirect=form-img.php"); // Adiciona o parâmetro redirect
+    header("location: login.php?redirect=form-img.php"); // adiciona o parâmetro redirect
     exit();
 }
 ?>

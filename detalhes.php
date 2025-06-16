@@ -74,7 +74,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['comentario'])) {
         $stmt_insert->bind_param("siii", $comentario, $_SESSION['ID_Usuario'], $post_id, $_SESSION['ID_Usuario']);
         $stmt_insert->execute();
         
-        // Notificar o autor da postagem sobre o novo comentário
         if ($postagem['ID_Categoria'] != $_SESSION['ID_Usuario']) {
             include 'funcoes.php';
             criarNotificacao(
