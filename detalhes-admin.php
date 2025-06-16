@@ -16,14 +16,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         try {
             $conn->begin_transaction();
             
+            // Primeiro exclui os relacionamentos
             $stmt1 = $conn->prepare("DELETE FROM postagem_contem_especie WHERE ID_Postagem = ?");
             $stmt1->bind_param("i", $post_id);
             $stmt1->execute();
             
+            // Depois os comentários
             $stmt2 = $conn->prepare("DELETE FROM comentarios WHERE ID_Postagem = ?");
             $stmt2->bind_param("i", $post_id);
             $stmt2->execute();
             
+            // Finalmente a postagem
             $stmt3 = $conn->prepare("DELETE FROM postagem WHERE ID_Postagem = ?");
             $stmt3->bind_param("i", $post_id);
             $stmt3->execute();
@@ -40,12 +43,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     if (isset($_POST['excluir_comentario'])) {
         $comentario_id = intval($_POST['comentario_id']);
-        $conn->query("DELETE FROM comentarios WHERE ID_Comentario = $comentario_id");
+        $stmt = $conn->prepare("DELETE FROM comentarios WHERE ID_Comentario = ?");
+        $stmt->bind_param("i", $comentario_id);
+        $stmt->execute();
     }
 }
 
-$post = $conn->query("SELECT * FROM postagem WHERE ID_Postagem = $post_id")->fetch_assoc();
-$comentarios = $conn->query("SELECT * FROM comentarios WHERE ID_Postagem = $post_id ORDER BY Data_Comentario DESC");
+// Use prepared statements também para as consultas de seleção
+$stmt_post = $conn->prepare("SELECT * FROM postagem WHERE ID_Postagem = ?");
+$stmt_post->bind_param("i", $post_id);
+$stmt_post->execute();
+$post = $stmt_post->get_result()->fetch_assoc();
+
+$stmt_comentarios = $conn->prepare("SELECT * FROM comentarios WHERE ID_Postagem = ? ORDER BY Data_Comentario DESC");
+$stmt_comentarios->bind_param("i", $post_id);
+$stmt_comentarios->execute();
+$comentarios = $stmt_comentarios->get_result();
 
 if (!$post) {
     header("Location: admin.php");
@@ -94,6 +107,7 @@ if (!$post) {
                 <p class="card-text"><?= nl2br(htmlspecialchars($post['Descricao_Postagem'])) ?></p>
                 
                 <form method="POST" class="mt-4">
+                    <input type="hidden" name="post_id" value="<?= $post_id ?>">
                     <button type="submit" name="excluir_post" class="btn btn-danger"
                             onclick="return confirm('Tem certeza que deseja excluir esta publicação permanentemente?')">
                         <i class="bi bi-trash"></i> Excluir Publicação
