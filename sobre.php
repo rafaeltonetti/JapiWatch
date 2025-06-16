@@ -54,7 +54,7 @@ $total_posts = $conn->query("SELECT COUNT(*) as total FROM postagem")->fetch_ass
 <body>
     <nav class="navbar navbar-dark navbar-expand-lg bg-dark">
         <div class="container-fluid gap-3">
-            <a class="navbar-brand" style="margin-left: 30px" href="#">
+            <a class="navbar-brand" style="margin-left: 30px" href="index.php">
                 <img src="img/logo.png" alt="Logo" width="120" height="55" class="d-inline-block align-text-top">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
